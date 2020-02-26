@@ -1,9 +1,22 @@
 const express = require('express');
 
-const db = require('./data/dbConfig.js');
+
 
 const server = express();
 
 server.use(express.json());
+
+server.get('/', (req, res) => {
+    res.send('<h2>Its workin dawg.');
+});
+
+function logger(req, res, next) {
+    console.log(
+        `[${new Date().toISOString()} ${req.method} to ${req.url} from ${req.get('Origin')}]`
+    );
+    next();
+}
+
+server.use(logger)
 
 module.exports = server;
